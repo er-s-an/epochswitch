@@ -1,0 +1,33 @@
+{
+  "name": "epochswitch",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc -b && vite build",
+    "lint": "oxlint",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@rainbow-me/rainbowkit": "^2.2.11",
+    "@tanstack/react-query": "^5.104.4",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1",
+    "viem": "^2.57.7",
+    "wagmi": "^2.19.5"
+  },
+  "devDependencies": {
+    "@types/node": "^24.13.3",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "@vitejs/plugin-react": "^6.1.2",
+    "oxlint": "^1.81.0",
+    "typescript": "~6.0.2",
+    "vite": "^8.3.4"
+  },
+  "description": "Policy agent for idle MUSD: hold sMUSD for the protocol fee or stake it for MEZO emissions, with an epoch decision log.",
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
