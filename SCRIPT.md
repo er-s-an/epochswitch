@@ -4,7 +4,7 @@ Spoken walkthrough of the local app. No render. Open `npm run dev` and, if a pre
 
 **0:00 — The choice**
 “Idle MUSD can sit in the savings vault as sMUSD and earn the protocol fee, or it can be staked in the gauge for MEZO. Staking gives the fee up. EpochSwitch picks one each epoch and writes it down.”
-Point at the MOCK / LIVE banner. “Vault, gauge, APRs, and the log are simulated. Wallet connect and the MUSD balance read are Mezo testnet.”
+Skim the three walkthrough chips under the lede. Point at the MOCK / LIVE banner. “Vault, gauge, APRs, and the log are simulated. Wallet connect and the MUSD balance read are Mezo testnet.”
 
 **0:25 — The book**
 Point at Positions. “Idle is the cash. Vault sMUSD is the hold path. Staked sMUSD is frozen — that gap is fee yield already redirected. The exchange rate on the right is creeping, which is the fee.”

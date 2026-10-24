@@ -77,6 +77,15 @@ export function ActionsCard({
         <h2 id="actions-title">Book actions</h2>
         <span className="eyebrow">Local simulation</span>
       </div>
+      <p className="path-hint">
+        <span className={mode === 'deposit' || mode === 'withdraw' ? 'on' : ''}>
+          Idle ↔ vault · hold fee
+        </span>
+        <span aria-hidden="true">→</span>
+        <span className={mode === 'stake' || mode === 'unstake' ? 'on' : ''}>
+          Vault ↔ gauge · MEZO
+        </span>
+      </p>
       <div className="seg" role="radiogroup" aria-label="Book action">
         {MODES.map((item) => (
           <button

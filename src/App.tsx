@@ -8,6 +8,9 @@ import { RatesCard } from './components/RatesCard'
 import { applyDecision, commitDecision, deposit, stake, unstake, withdraw } from './lib/engine'
 import { useBook } from './lib/useBook'
 
+const EXPLAINER = 'https://review-clips.vercel.app/v/mezo-epochswitch-explainer'
+const REPO = 'https://github.com/er-s-an/epochswitch'
+
 export default function App() {
   const { book, error, flashId, commit, patch, reset } = useBook()
 
@@ -37,6 +40,30 @@ export default function App() {
           the agent picks hold, stake, or a mix, writes it to the log, and can apply
           that choice to the simulated book.
         </p>
+        <ol className="walkthrough" aria-label="Judge walkthrough">
+          <li>
+            <span className="walk-num">1</span>
+            <span>
+              <strong>Positions</strong> — idle cash, vault hold, gauge stake. Surplus
+              above the spend reserve is what the agent deploys.
+            </span>
+          </li>
+          <li>
+            <span className="walk-num">2</span>
+            <span>
+              <strong>Rates → Policy</strong> — read Epoch lean, then{' '}
+              <strong>1 · Run</strong> and <strong>2 · Apply</strong> to log and
+              rebalance the simulated book.
+            </span>
+          </li>
+          <li>
+            <span className="walk-num">3</span>
+            <span>
+              <strong>Kill switch</strong> — forces HOLD and a full unstake; the epoch
+              log keeps both reasons.
+            </span>
+          </li>
+        </ol>
         <div className="layout">
           <div className="stack">
             <PositionsCard book={book} />
@@ -62,9 +89,22 @@ export default function App() {
         </div>
         <LogCard rows={book.log} flashId={flashId} />
         <footer className="footer">
+          <p className="footer-links">
+            <a href={REPO} target="_blank" rel="noreferrer">
+              GitHub
+            </a>
+            <span aria-hidden="true">·</span>
+            <a href={EXPLAINER} target="_blank" rel="noreferrer">
+              Explainer (2–3 min)
+            </a>
+            <span aria-hidden="true">·</span>
+            <a href="https://epochswitch.vercel.app" target="_blank" rel="noreferrer">
+              Live demo
+            </a>
+          </p>
           <p>
             EpochSwitch · Mezo Soft Wave 1 thin demo · window closes about 2026-10-26.
-            Do not re-enroll and do not submit this build.
+            Vault / gauge / APRs / log are simulated. Wallet + MUSD balance are testnet.
           </p>
           <p>
             Testnet MUSD {MUSD_TESTNET}. Mainnet MEZO reference {MEZO_MAINNET_REFERENCE}.
