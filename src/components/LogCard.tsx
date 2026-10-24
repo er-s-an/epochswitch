@@ -42,7 +42,14 @@ export function LogCard({ rows, flashId }: { rows: LogRow[]; flashId: string | n
         is an on-chain receipt.
       </p>
       {rows.length === 0 ? (
-        <p className="empty">No rows yet. Run an epoch decision or move the book.</p>
+        <div className="empty-box">
+          <p className="empty">No rows yet.</p>
+          <p className="fine">
+            Start in Policy: set reserve / max stake, optionally flip the kill switch,
+            then <strong>1 · Run epoch decision</strong>. The row appears here. Use{' '}
+            <strong>2 · Apply</strong> to rebalance the simulated book.
+          </p>
+        </div>
       ) : (
         <ol className="log">
           {rows.map((row) => (

@@ -1,4 +1,10 @@
-import { recommend, type Portfolio } from '../lib/engine'
+import {
+  INDIFFERENCE_PP,
+  recommend,
+  savingsMusd,
+  stakedMusd,
+  type Portfolio,
+} from '../lib/engine'
 import { fmt } from '../lib/format'
 
 export function PolicyCard({
@@ -19,6 +25,12 @@ export function PolicyCard({
   const drifted =
     !!last &&
     (last.recommendation !== preview.recommendation || last.stakePct !== preview.stakePct)
+  const savings = savingsMusd(book)
+  const gaugeNowPct = savings > 0 ? (stakedMusd(book) / savings) * 100 : 0
+  const idleGap = book.idleMusd - book.reserveMusd
+  const lastLabel = last
+    ? `${last.recommendation}${last.recommendation === 'MIXED' ? ` ${fmt(last.stakePct, 0)}%` : ''}`
+    : null
 
   return (
     <section className={`card ${book.kill ? 'killed' : ''}`} aria-labelledby="policy-title">
@@ -73,7 +85,14 @@ export function PolicyCard({
         </span>
       </button>
 
-      <div className="preview" aria-live="polite">
+      {book.kill && (
+        <p className="alert kill-alert" role="status">
+          Kill is on. The simulated read is HOLD. Run, then Apply, to unstake the gauge
+          and restore the fee path.
+        </p>
+      )}
+
+      <div className={`preview ${book.kill ? 'preview-kill' : ''}`} aria-live="polite">
         <div className="preview-top">
           <span className="label">Simulated read</span>
           <span className={`pill ${preview.recommendation}`}>
@@ -82,23 +101,61 @@ export function PolicyCard({
           </span>
         </div>
         <p>{preview.rationale}</p>
+        <dl className="target-grid" aria-label="Apply targets for this read">
+          <div>
+            <dt>Idle → reserve</dt>
+            <dd>
+              {fmt(book.idleMusd)} → {fmt(book.reserveMusd)} MUSD
+              {idleGap > 0.01
+                ? ` · park ${fmt(idleGap)} surplus`
+                : idleGap < -0.01
+                  ? ` · refill ${fmt(-idleGap)}`
+                  : ' · already at floor'}
+            </dd>
+          </div>
+          <div>
+            <dt>Gauge share of savings</dt>
+            <dd>
+              {fmt(gaugeNowPct, 0)}% → {fmt(preview.stakePct, 0)}%
+              {preview.recommendation === 'HOLD' ? ' · full unstake' : ''}
+            </dd>
+          </div>
+        </dl>
       </div>
 
-      <div className="row">
-        <button type="button" className="btn primary" onClick={onRun}>
-          Run epoch decision
-        </button>
-        <button type="button" className="btn" disabled={!last} onClick={onApply}>
-          Apply last decision
-        </button>
+      <div className="epoch-steps" aria-label="Epoch workflow">
+        <div className="epoch-step">
+          <span className="step-num">1</span>
+          <button type="button" className="btn primary" onClick={onRun}>
+            Run epoch decision
+          </button>
+        </div>
+        <div className="epoch-step">
+          <span className="step-num">2</span>
+          <button
+            type="button"
+            className={`btn ${last && !drifted ? 'primary' : ''}`}
+            disabled={!last}
+            onClick={onApply}
+          >
+            Apply last decision
+          </button>
+        </div>
       </div>
-      <p className="fine">
-        Run writes one row to this browser. Apply rebalances the simulated book to that
-        row and does not send a transaction.
-        {drifted && last
-          ? ` Policy has moved since the logged ${last.recommendation}. Run again to log the new read.`
-          : ''}
-      </p>
+
+      {lastLabel ? (
+        <p className="last-logged">
+          Last logged: <span className={`pill ${last!.recommendation}`}>{lastLabel}</span>
+          {drifted
+            ? ' · policy drifted — Run again before Apply if you want the new read.'
+            : ' · Apply rebalances the simulated book to that row.'}
+        </p>
+      ) : (
+        <p className="fine">
+          Step 1 writes one row to this browser. Step 2 moves idle / vault / gauge to match
+          and does not send a transaction. Indifference band is {INDIFFERENCE_PP} pp.
+        </p>
+      )}
     </section>
   )
 }

@@ -9,6 +9,20 @@ The policy agent writes the choice to an epoch log. Spend reserve, max-stake per
 
 Contest window: Wave 1 closes about **2026-10-26**. This build is already enrolled. Do not re-enroll. Do not submit it.
 
+## AKINDO paste (Wave 1)
+
+Use these English strings on the project form. Do not submit until the operator says **交**.
+
+| Field | Paste |
+|---|---|
+| Title | EpochSwitch |
+| One-liner | Epoch policy agent: idle MUSD spend reserve → vault sMUSD hold vs gauge stake; epoch log + kill switch |
+| Short description | Operators keep a spend reserve in idle MUSD. Surplus is minted to sMUSD. Each epoch EpochSwitch recommends HOLD (protocol fee via the exchange rate), STAKE (MEZO emissions), or MIXED up to a max-stake cap, writes the choice to a browser epoch log, and can apply that choice to a simulated book. Kill switch forces HOLD and a full unstake. Vault/gauge/APRs are mocked; wallet connect and testnet MUSD balance reads are live on Mezo Testnet 31611. |
+| Demo | https://epochswitch.vercel.app |
+| Video | https://review-clips.vercel.app/v/mezo-epochswitch-explainer |
+| Repo | https://github.com/er-s-an/epochswitch |
+| Honesty | Vault, sMUSD, gauge, APRs, emissions, and the log are simulated. No vault/gauge tx is sent. On-chain: chain id + MUSD `balanceOf` when connected. |
+
 ## Run
 
 ```bash
@@ -21,7 +35,7 @@ npm run preview   # http://localhost:4173
 
 Optional: set `VITE_WC_PROJECT_ID` to a WalletConnect Cloud project id if you want a working QR code. Injected wallets (MetaMask and other browser wallets) connect without it.
 
-Live demo: https://epochswitch.vercel.app (production redeployed 2026-10-23 ~22:09 Asia/Shanghai with this revision).
+Live demo: https://epochswitch.vercel.app
 
 ## Chain
 

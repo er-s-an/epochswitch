@@ -13,11 +13,12 @@ Point at Positions. “Idle is the cash. Vault sMUSD is the hold path. Staked sM
 Deposit 250 MUSD. “That mints sMUSD at today’s rate and lands in the epoch log. No transaction.”
 
 **1:05 — The policy**
-“Spend reserve stays idle. Max stake caps how much of the savings value may sit in the gauge. Right now the gauge APR is 14.8% and the hold fee is 5.2%, so the simulated read is MIXED 60%.”
-Click **Run epoch decision**. Read the row. Click **Apply last decision**. “Idle falls to the 10,000 reserve. Sixty percent of savings value is in the gauge. The rest keeps earning the fee.”
+Point at Rates. “Epoch lean shows MIXED 60% because the gauge clears hold by more than the 0.25 point band, capped by max stake.”
+“Spend reserve stays idle. Max stake caps the gauge. The Policy panel shows Apply targets: idle down to the reserve, gauge share to 60%.”
+Click **1 · Run epoch decision**. Read the log row. Click **2 · Apply last decision**. “Idle falls to the 10,000 reserve. Sixty percent of savings value is in the gauge. The rest keeps earning the fee.”
 
 **1:45 — Kill switch**
-Turn the kill switch on. “The read flips to HOLD even though emissions are still higher. The agent must unstake.”
+Turn the kill switch on. “The kill alert and epoch lean flip to HOLD even though emissions are still higher. Apply targets show a full unstake.”
 Run the epoch, then apply. “Gauge goes to zero. The shares that come back are slightly fewer, because the fee they missed does not return.”
 
 **2:15 — The other way**

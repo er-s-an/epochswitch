@@ -1,5 +1,10 @@
 import { useRef } from 'react'
-import { ACCRUAL_MULTIPLIER, type Portfolio } from '../lib/engine'
+import {
+  ACCRUAL_MULTIPLIER,
+  INDIFFERENCE_PP,
+  recommend,
+  type Portfolio,
+} from '../lib/engine'
 import { fmt, fmtApr } from '../lib/format'
 
 export function RatesCard({
@@ -13,6 +18,18 @@ export function RatesCard({
   const spread = book.gaugeAprPct - book.holdAprPct
   const delta = book.exchangeRate - opened.current
   const scale = Math.max(book.holdAprPct, book.gaugeAprPct, 1)
+  const lean = recommend(book)
+  const clears = spread >= INDIFFERENCE_PP
+  let leanLine: string
+  if (book.kill) {
+    leanLine = `Epoch lean: HOLD — kill switch overrides a ${fmt(spread, 2)} pp spread.`
+  } else if (!clears) {
+    leanLine = `Epoch lean: HOLD — gauge does not clear hold by the ${INDIFFERENCE_PP} pp band (spread ${fmt(spread, 2)} pp).`
+  } else if (lean.recommendation === 'STAKE') {
+    leanLine = `Epoch lean: STAKE — gauge clears hold by ${fmt(spread, 2)} pp and max stake is 100%.`
+  } else {
+    leanLine = `Epoch lean: MIXED ${fmt(lean.stakePct, 0)}% — gauge clears hold by ${fmt(spread, 2)} pp; stake capped at max stake.`
+  }
 
   return (
     <section className="card" aria-labelledby="rates-title">
@@ -61,9 +78,12 @@ export function RatesCard({
       <div className="rate-meta">
         <div>
           <div className="label">Spread · gauge minus hold</div>
-          <div className={spread >= 0.25 ? 'spread up' : 'spread'}>
+          <div className={clears ? 'spread up' : 'spread'}>
             {spread >= 0 ? '+' : ''}
             {fmt(spread, 2)} pp
+          </div>
+          <div className="fine">
+            Stake only when spread ≥ {INDIFFERENCE_PP} pp
           </div>
         </div>
         <div>
@@ -75,6 +95,13 @@ export function RatesCard({
           </div>
         </div>
       </div>
+      <p className={`lean-line ${lean.recommendation}`} role="status">
+        <span className={`pill ${lean.recommendation}`}>
+          {lean.recommendation}
+          {lean.recommendation === 'MIXED' ? ` ${fmt(lean.stakePct, 0)}%` : ''}
+        </span>
+        <span>{leanLine}</span>
+      </p>
       <p className="hint-line">
         Unstaked sMUSD earns the fee through the exchange rate. Staked sMUSD redirects
         that fee to veBTC voters and earns MEZO emissions instead. The rate creeps on an{' '}
