@@ -43,11 +43,12 @@ export function LogCard({ rows, flashId }: { rows: LogRow[]; flashId: string | n
       </p>
       {rows.length === 0 ? (
         <div className="empty-box">
-          <p className="empty">No rows yet.</p>
+          <p className="empty">No epoch rows yet.</p>
           <p className="fine">
-            Start in Policy: set reserve / max stake, optionally flip the kill switch,
-            then <strong>1 · Run epoch decision</strong>. The row appears here. Use{' '}
-            <strong>2 · Apply</strong> to rebalance the simulated book.
+            Judge path: open <strong>Rates</strong> for Epoch lean → <strong>Policy</strong>{' '}
+            set reserve / max stake (optional kill) → <strong>1 · Run</strong> writes this
+            log → <strong>2 · Apply</strong> rebalances the simulated book. Nothing here is
+            an on-chain receipt.
           </p>
         </div>
       ) : (

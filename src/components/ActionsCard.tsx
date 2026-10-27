@@ -62,7 +62,14 @@ export function ActionsCard({
     },
   }
   const current = meta[mode]
-  const invalid = !(parsed > 0) || parsed > current.max + 1e-6
+  const emptyAmount = !(parsed > 0)
+  const overMax = parsed > current.max + 1e-6
+  const invalid = emptyAmount || overMax
+  let amountHint: string | null = null
+  if (emptyAmount) amountHint = 'Enter an amount greater than zero to enable the action.'
+  else if (overMax) {
+    amountHint = `Amount exceeds available ${fmt(current.max, mode === 'deposit' || mode === 'withdraw' ? 2 : 4)} ${current.unit}. Tap Max or lower the amount.`
+  }
 
   function submit() {
     if (mode === 'deposit') onDeposit(parsed)
@@ -129,6 +136,11 @@ export function ActionsCard({
         {current.unit}. {current.hint} Each action is written to the epoch log. No vault
         or gauge transaction is sent.
       </p>
+      {amountHint && (
+        <p className="alert soft" role="status">
+          {amountHint}
+        </p>
+      )}
       <p className="fine">
         Gauge book value {fmt(gaugeValue)} MUSD · vault book value {fmt(vaultValue)} MUSD.
       </p>

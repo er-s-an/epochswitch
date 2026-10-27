@@ -27,7 +27,7 @@ export function HeaderBar() {
         </span>
         <div>
           <h1>EpochSwitch</h1>
-          <p>Idle MUSD, one epoch at a time</p>
+          <p>Surplus idle MUSD → HOLD fee vs STAKE emissions</p>
         </div>
       </div>
       <div className="header-actions">

@@ -583,6 +583,72 @@ a { color: var(--amber); }
   color: var(--muted);
 }
 
+.flow-strip {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 10px;
+  align-items: center;
+  margin-top: 12px;
+  padding: 10px 12px;
+  border-radius: 14px;
+  border: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.flow-chip {
+  display: inline-flex;
+  align-items: center;
+  min-height: 24px;
+  padding: 2px 9px;
+  border-radius: 999px;
+  font-size: 0.72rem;
+  font-weight: 650;
+  letter-spacing: 0.03em;
+  color: var(--dim);
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--line);
+}
+
+.flow-chip.on {
+  color: #ffd0cc;
+  background: rgba(255, 42, 54, 0.16);
+  border-color: rgba(255, 42, 54, 0.4);
+}
+
+.flow-chip.done {
+  color: var(--green);
+  background: rgba(61, 214, 140, 0.12);
+  border-color: rgba(61, 214, 140, 0.35);
+}
+
+.flow-chip.warn {
+  color: var(--amber);
+  background: rgba(245, 193, 108, 0.12);
+  border-color: rgba(245, 193, 108, 0.4);
+}
+
+.flow-arrow {
+  color: var(--dim);
+  font-size: 0.85rem;
+}
+
+.flow-hint {
+  flex: 1 1 180px;
+  color: var(--muted);
+  font-size: 0.8rem;
+  line-height: 1.35;
+}
+
+.flow-strip.flow-ready { border-color: rgba(255, 42, 54, 0.22); }
+.flow-strip.flow-logged { border-color: rgba(61, 214, 140, 0.28); }
+.flow-strip.flow-drifted { border-color: rgba(245, 193, 108, 0.35); }
+
+.alert.soft {
+  background: rgba(245, 193, 108, 0.1);
+  color: #f5dfb8;
+  border: 1px solid rgba(245, 193, 108, 0.28);
+}
+
 .epoch-steps {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -782,7 +848,9 @@ a { color: var(--amber); }
   .wrap { padding: 16px 12px 64px; }
   .brand h1 { font-size: 1.55rem; }
   .lede { font-size: 0.96rem; margin: 14px 0 10px; }
-  .walkthrough { grid-template-columns: 1fr; }
+  .walkthrough { grid-template-columns: 1fr; gap: 8px; margin-bottom: 14px; }
+  .flow-strip { gap: 6px 8px; padding: 9px 10px; }
+  .flow-hint { flex-basis: 100%; }
   .seg { grid-template-columns: 1fr 1fr; }
   .header-actions { width: 100%; justify-content: flex-start; }
   .amount-row .btn.primary { width: 100%; }
@@ -804,6 +872,8 @@ a { color: var(--amber); }
   .stat { padding: 10px; }
   .snap-chip { font-size: 0.65rem; padding: 2px 7px; }
   .log-meta .pill { max-width: 100%; }
+  .walkthrough li { padding: 10px 10px; gap: 10px; }
+  .surplus-callout { font-size: 0.8rem; padding: 9px 10px; }
 }
 
 @media (prefers-reduced-motion: reduce) {

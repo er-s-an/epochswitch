@@ -35,10 +35,11 @@ export default function App() {
       <div className="wrap">
         <HeaderBar />
         <p className="lede">
-          Idle MUSD above the spend reserve can sit in the savings vault as sMUSD and
-          earn the protocol fee, or stake in the gauge for MEZO emissions. Each epoch
-          the agent picks hold, stake, or a mix, writes it to the log, and can apply
-          that choice to the simulated book.
+          Keep a spend reserve in idle MUSD. Each epoch, park the surplus as vault
+          sMUSD and choose <strong>HOLD</strong> (protocol fee via the exchange rate)
+          or <strong>STAKE</strong> (MEZO emissions) up to a max-stake cap. The agent
+          logs the choice and can apply it to the simulated book. Kill switch forces
+          HOLD and a full unstake.
         </p>
         <ol className="walkthrough" aria-label="Judge walkthrough">
           <li>
@@ -52,8 +53,8 @@ export default function App() {
             <span className="walk-num">2</span>
             <span>
               <strong>Rates → Policy</strong> — read Epoch lean, then{' '}
-              <strong>1 · Run</strong> and <strong>2 · Apply</strong> to log and
-              rebalance the simulated book.
+              <strong>1 · Run</strong> (write the log) and <strong>2 · Apply</strong>{' '}
+              (rebalance the simulated book).
             </span>
           </li>
           <li>
@@ -103,7 +104,7 @@ export default function App() {
             </a>
           </p>
           <p>
-            EpochSwitch · Mezo Soft Wave 1 thin demo · window closes about 2026-10-26.
+            EpochSwitch · Mezo Soft Wave 2 demo · building window Nov 2–15 2026.
             Vault / gauge / APRs / log are simulated. Wallet + MUSD balance are testnet.
           </p>
           <p>

@@ -1,17 +1,17 @@
 # EpochSwitch
 
-A thin Mezo Soft Wave 1 demo. An operator keeps a spend reserve in idle MUSD and, once each epoch, chooses between two uses of the rest:
+A thin Mezo Soft Wave 2 demo. An operator keeps a spend reserve in idle MUSD and, once each epoch, chooses between two uses of the rest:
 
 - **Hold** sMUSD and earn the protocol fee. The fee shows up as a rising sMUSD → MUSD exchange rate.
 - **Stake** sMUSD in the savings gauge and earn MEZO emissions. While staked, that fee share is redirected to veBTC voters.
 
 The policy agent writes the choice to an epoch log. Spend reserve, max-stake percent, and a kill switch bound the choice. With the kill switch on, the agent recommends **HOLD** and a full unstake.
 
-Contest window: Wave 1 closes about **2026-10-26**. This build is already enrolled. Do not re-enroll. Do not submit it.
+Contest window: Wave 2 building **November 2 – November 15, 2026**. Soft seat already enrolled (CaesarXie). Do not re-enroll. Do not submit until the operator says **交**.
 
-## AKINDO paste (Wave 1)
+## AKINDO paste (Wave 2)
 
-Use these English strings on the project form. Do not submit until the operator says **交**.
+Use these English strings on the project form. Paste only after Wave 2 building is open. Do not submit until the operator says **交**. Never bind a payment card unless the form forces it and the operator confirms.
 
 | Field | Paste |
 |---|---|
@@ -22,6 +22,14 @@ Use these English strings on the project form. Do not submit until the operator 
 | Video | https://review-clips.vercel.app/v/mezo-epochswitch-explainer |
 | Repo | https://github.com/er-s-an/epochswitch |
 | Honesty | Vault, sMUSD, gauge, APRs, emissions, and the log are simulated. No vault/gauge tx is sent. On-chain: chain id + MUSD `balanceOf` when connected. |
+
+### Judge walkthrough (60–90s)
+
+1. Open the live demo. Note MOCK vs LIVE badges.
+2. **Positions** — read idle / vault / gauge and the surplus callout.
+3. **Rates** — tweak scenario APRs; watch Epoch lean (HOLD / STAKE / MIXED).
+4. **Policy** — set spend reserve + max stake; optional kill switch. Follow the flow strip: **1 · Run** → log row → **2 · Apply** → book rebalances.
+5. Open **Epoch log** for the decision + snapshot chips. Kill switch forces HOLD + full unstake.
 
 ## Run
 
@@ -76,4 +84,4 @@ In: connect, positions, book actions, rates, policy, epoch decision, log.
 
 Out: CDP mint, leverage, a custom AMM, bridge, KYB, and any video render.
 
-See `SCRIPT.md` for a two-to-three minute walkthrough, and `/workspace/competitions/mezo/BUILD-STATUS.md` for status.
+See `SCRIPT.md` for a two-to-three minute walkthrough, and `/workspace/competitions/mezo/WAVE2-SUBMIT-PACK.md` for Wave 2 standby.

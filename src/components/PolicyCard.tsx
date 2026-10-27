@@ -32,6 +32,19 @@ export function PolicyCard({
     ? `${last.recommendation}${last.recommendation === 'MIXED' ? ` ${fmt(last.stakePct, 0)}%` : ''}`
     : null
 
+  let flowState: 'ready' | 'logged' | 'drifted'
+  let flowHint: string
+  if (!last) {
+    flowState = 'ready'
+    flowHint = 'Step 1 logs the simulated read. Step 2 is locked until a row exists.'
+  } else if (drifted) {
+    flowState = 'drifted'
+    flowHint = 'Inputs changed after the last log. Run again for a fresh row, or Apply the old one.'
+  } else {
+    flowState = 'logged'
+    flowHint = 'Decision logged. Apply rebalances idle / vault / gauge — no on-chain tx.'
+  }
+
   return (
     <section className={`card ${book.kill ? 'killed' : ''}`} aria-labelledby="policy-title">
       <div className="card-head">
@@ -123,6 +136,15 @@ export function PolicyCard({
         </dl>
       </div>
 
+      <div className={`flow-strip flow-${flowState}`} role="status" aria-label="Epoch decision flow">
+        <span className={`flow-chip ${flowState === 'ready' ? 'on' : 'done'}`}>1 · Run</span>
+        <span className="flow-arrow" aria-hidden="true">→</span>
+        <span className={`flow-chip ${flowState === 'logged' ? 'on' : flowState === 'drifted' ? 'warn' : ''}`}>
+          2 · Apply
+        </span>
+        <span className="flow-hint">{flowHint}</span>
+      </div>
+
       <div className="epoch-steps" aria-label="Epoch workflow">
         <div className="epoch-step">
           <span className="step-num">1</span>
@@ -136,6 +158,7 @@ export function PolicyCard({
             type="button"
             className={`btn ${last && !drifted ? 'primary' : ''}`}
             disabled={!last}
+            title={!last ? 'Run an epoch decision first' : undefined}
             onClick={onApply}
           >
             Apply last decision
